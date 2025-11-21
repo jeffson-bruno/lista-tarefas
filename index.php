@@ -25,10 +25,15 @@ if(!isset($_SESSION['usuario'])) {
 <body class="bg-light">
 
     <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
+        <div class="container d-flex justify-content-between">
             <span class="navbar-brand mb-0 h1">📋 Lista de Tarefas</span>
+
+            <a href="logout.php" class="btn btn-outline-light btn-sm">
+                Sair
+            </a>
         </div>
     </nav>
+
 
     <div class="container">
         <div class="row justify-content-center">

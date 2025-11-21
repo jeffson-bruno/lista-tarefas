@@ -37,11 +37,11 @@ if(isset($_SESSION['usuario'])) {
                     <form action="validar_login.php" method="POST">
                         <div class="mb-3">
                             <label class="form-label">Usuário:</label>
-                            <input type="text" name="usuario" class="form-control" placeholder="Digite admin" required>
+                            <input type="text" name="usuario" class="form-control" placeholder="Digite o Usuário" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Senha:</label>
-                            <input type="password" name="senha" class="form-control" placeholder="Digite 123" required>
+                            <input type="password" name="senha" class="form-control" placeholder="Digite a Senha" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Entrar</button>
                     </form>

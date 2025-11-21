@@ -4,6 +4,9 @@ if(!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit;
 }
+
+require 'config/db.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -36,30 +39,84 @@ if(!isset($_SESSION['usuario'])) {
 
 
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
 
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Bem-vindo!</h5>
-                        <p class="card-text">
-                            Este será o painel da sua <strong>Lista de Tarefas</strong>. <br>
-                            Nos próximos passos vamos:
-                        </p>
-                        <ul>
-                            <li>Criar a tela de login</li>
-                            <li>Criar o CRUD de tarefas</li>
-                            <li>Usar jQuery + AJAX pra deixar tudo dinâmico</li>
-                        </ul>
-                        <p class="text-muted mb-0">
-                            Por enquanto, isso é só o esqueleto inicial do projeto.
-                        </p>
-                    </div>
-                </div>
+        <!-- HEADER -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>📋 Minhas Tarefas</h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovaTarefa">
+                ➕ Nova Tarefa
+            </button>
+        </div>
 
-            </div>
+        <!-- LISTA DE TAREFAS -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <?php
+                $stmt = $pdo->query("SELECT * FROM tasks ORDER BY status, data_criacao DESC");
+                $tarefas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if(count($tarefas) == 0):
+                ?>
+                    <p class="text-center text-muted">Nenhuma tarefa cadastrada ainda.</p>
+                <?php
+                else:
+                    foreach($tarefas as $t):
+                ?>
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <div>
+                                <strong><?= htmlspecialchars($t['titulo']) ?></strong>
+                                <br>
+                                <small class="text-muted"><?= $t['data_criacao'] ?></small>
+                            </div>
+
+                            <div>
+                                <a href="#" class="btn btn-sm btn-success">✔ Concluir</a>
+                                <a href="#" class="btn btn-sm btn-warning">✏ Editar</a>
+                                <a href="#" class="btn btn-sm btn-danger">🗑 Excluir</a>
+                            </div>
+                        </div>
+                <?php
+                    endforeach;
+                endif;
+                ?>
+
         </div>
     </div>
+
+</div>
+
+    
+     <!-- MODAL NOVA TAREFA -->
+    <div class="modal fade" id="modalNovaTarefa" tabindex="-1">
+        <div class="modal-dialog">
+            <form action="salvar_tarefa.php" method="POST" class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">📝 Nova Tarefa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="mb-3">
+                <label class="form-label">Título:</label>
+                <input type="text" name="titulo" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Descrição (opcional):</label>
+                <textarea name="descricao" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+
+            </form>
+        </div>
+    </div>
+
+
 
     <!-- jQuery (CDN) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

@@ -65,15 +65,26 @@ require 'config/db.php';
                 ?>
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <div>
-                                <strong><?= htmlspecialchars($t['titulo']) ?></strong>
+                                <strong class="<?= $t['status'] === 'concluida' ? 'text-success text-decoration-line-through' : '' ?>">
+                                    <?= htmlspecialchars($t['titulo']) ?>
+                                </strong>
                                 <br>
                                 <small class="text-muted"><?= $t['data_criacao'] ?></small>
                             </div>
 
                             <div>
-                                <a href="#" class="btn btn-sm btn-success">✔ Concluir</a>
+                                <a href="concluir_tarefa.php?id=<?= $t['id'] ?>" 
+                                    class="btn btn-sm btn-success">
+                                    ✔ Concluir
+                                </a>
+
                                 <a href="#" class="btn btn-sm btn-warning">✏ Editar</a>
-                                <a href="#" class="btn btn-sm btn-danger">🗑 Excluir</a>
+                                <a href="excluir_tarefa.php?id=<?= $t['id'] ?>" 
+                                    class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Tem certeza que deseja excluir?')">
+                                    🗑 Excluir
+                                </a>
+
                             </div>
                         </div>
                 <?php

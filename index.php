@@ -57,72 +57,126 @@ $tarefasConcluidas = $stmtConcluidas->fetchAll(PDO::FETCH_ASSOC);
     </nav>
 
 
-    <div class="container">
+   <div class="container">
 
-        <!-- HEADER -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3>📋 Minhas Tarefas</h3>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovaTarefa">
-                ➕ Nova Tarefa
-            </button>
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>📋 Minhas Tarefas</h3>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovaTarefa">
+            ➕ Nova Tarefa
+        </button>
+    </div>
+
+    <div class="row">
+        <!-- COLUNA PENDENTES -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-warning-subtle">
+                    <strong>⏳ Tarefas Pendentes</strong>
+                </div>
+                <div class="card-body">
+
+                    <?php if(count($tarefasPendentes) === 0): ?>
+                        <p class="text-muted text-center mb-0">
+                            Nenhuma tarefa pendente.
+                        </p>
+                    <?php else: ?>
+                        <?php foreach($tarefasPendentes as $t): ?>
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                                <div>
+                                    <strong>
+                                        <?= htmlspecialchars($t['titulo']) ?>
+                                    </strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        <?= $t['data_criacao'] ?>
+                                    </small>
+                                </div>
+
+                                <div class="text-end">
+                                    <a href="concluir_tarefa.php?id=<?= $t['id'] ?>" 
+                                       class="btn btn-sm btn-success mb-1">
+                                       ✔ Concluir
+                                    </a>
+
+                                    <button 
+                                        class="btn btn-sm btn-warning mb-1 btn-editar"
+                                        data-id="<?= $t['id'] ?>"
+                                        data-titulo="<?= htmlspecialchars($t['titulo'], ENT_QUOTES) ?>"
+                                        data-descricao="<?= htmlspecialchars($t['descricao'] ?? '', ENT_QUOTES) ?>"
+                                        data-status="<?= $t['status'] ?>"
+                                    >
+                                        ✏ Editar
+                                    </button>
+
+                                    <a href="excluir_tarefa.php?id=<?= $t['id'] ?>" 
+                                       class="btn btn-sm btn-danger mb-1"
+                                       onclick="return confirm('Tem certeza que deseja excluir?')">
+                                       🗑 Excluir
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                </div>
+            </div>
         </div>
 
-        <!-- LISTA DE TAREFAS -->
-        <div class="card shadow-sm">
-            <div class="card-body">
+        <!-- COLUNA CONCLUÍDAS -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success-subtle">
+                    <strong>✅ Tarefas Concluídas</strong>
+                </div>
+                <div class="card-body">
 
-                <?php
-                $stmt = $pdo->query("SELECT * FROM tasks ORDER BY status, data_criacao DESC");
-                $tarefas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    <?php if(count($tarefasConcluidas) === 0): ?>
+                        <p class="text-muted text-center mb-0">
+                            Nenhuma tarefa concluída ainda.
+                        </p>
+                    <?php else: ?>
+                        <?php foreach($tarefasConcluidas as $t): ?>
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                                <div>
+                                    <strong class="text-success text-decoration-line-through">
+                                        <?= htmlspecialchars($t['titulo']) ?>
+                                    </strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        <?= $t['data_criacao'] ?>
+                                    </small>
+                                </div>
 
-                if(count($tarefas) == 0):
-                ?>
-                    <p class="text-center text-muted">Nenhuma tarefa cadastrada ainda.</p>
-                <?php
-                else:
-                    foreach($tarefas as $t):
-                ?>
-                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                            <div>
-                                <strong class="<?= $t['status'] === 'concluida' ? 'text-success text-decoration-line-through' : '' ?>">
-                                    <?= htmlspecialchars($t['titulo']) ?>
-                                </strong>
-                                <br>
-                                <small class="text-muted"><?= $t['data_criacao'] ?></small>
-                            </div>
+                                <div class="text-end">
+                                    <!-- Aqui não mostramos 'Concluir', só Editar/Excluir -->
+                                    <button 
+                                        class="btn btn-sm btn-warning mb-1 btn-editar"
+                                        data-id="<?= $t['id'] ?>"
+                                        data-titulo="<?= htmlspecialchars($t['titulo'], ENT_QUOTES) ?>"
+                                        data-descricao="<?= htmlspecialchars($t['descricao'] ?? '', ENT_QUOTES) ?>"
+                                        data-status="<?= $t['status'] ?>"
+                                    >
+                                        ✏ Editar
+                                    </button>
 
-                            <div>
-                                <?php if($t['status'] === 'pendente'): ?>
-                                    <a href="concluir_tarefa.php?id=<?= $t['id'] ?>" 
-                                    class="btn btn-sm btn-success">
-                                    ✔ Concluir
+                                    <a href="excluir_tarefa.php?id=<?= $t['id'] ?>" 
+                                       class="btn btn-sm btn-danger mb-1"
+                                       onclick="return confirm('Tem certeza que deseja excluir?')">
+                                       🗑 Excluir
                                     </a>
-                                <?php endif; ?>
-
-                                <button 
-                                    class="btn btn-sm btn-warning btn-editar"
-                                    data-id="<?= $t['id'] ?>"
-                                    data-titulo="<?= htmlspecialchars($t['titulo'], ENT_QUOTES) ?>"
-                                    data-descricao="<?= htmlspecialchars($t['descricao'] ?? '', ENT_QUOTES) ?>"
-                                    data-status="<?= $t['status'] ?>"
-                                >
-                                    ✏ Editar
-                                </button>
-
-                                <a href="excluir_tarefa.php?id=<?= $t['id'] ?>" 
-                                class="btn btn-sm btn-danger"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">
-                                🗑 Excluir
-                                </a>
+                                </div>
                             </div>
-                        </div>
-                <?php
-                    endforeach;
-                endif;
-                ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
+                </div>
+            </div>
         </div>
     </div>
+
+</div>
+
 
 </div>
 

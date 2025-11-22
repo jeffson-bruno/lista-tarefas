@@ -7,6 +7,8 @@ if(!isset($_SESSION['usuario'])) {
 
 require 'config/db.php';
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -73,18 +75,28 @@ require 'config/db.php';
                             </div>
 
                             <div>
-                                <a href="concluir_tarefa.php?id=<?= $t['id'] ?>" 
+                                <?php if($t['status'] === 'pendente'): ?>
+                                    <a href="concluir_tarefa.php?id=<?= $t['id'] ?>" 
                                     class="btn btn-sm btn-success">
                                     ✔ Concluir
-                                </a>
+                                    </a>
+                                <?php endif; ?>
 
-                                <a href="#" class="btn btn-sm btn-warning">✏ Editar</a>
+                                <button 
+                                    class="btn btn-sm btn-warning btn-editar"
+                                    data-id="<?= $t['id'] ?>"
+                                    data-titulo="<?= htmlspecialchars($t['titulo'], ENT_QUOTES) ?>"
+                                    data-descricao="<?= htmlspecialchars($t['descricao'] ?? '', ENT_QUOTES) ?>"
+                                    data-status="<?= $t['status'] ?>"
+                                >
+                                    ✏ Editar
+                                </button>
+
                                 <a href="excluir_tarefa.php?id=<?= $t['id'] ?>" 
-                                    class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Tem certeza que deseja excluir?')">
-                                    🗑 Excluir
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Tem certeza que deseja excluir?')">
+                                🗑 Excluir
                                 </a>
-
                             </div>
                         </div>
                 <?php
@@ -126,6 +138,49 @@ require 'config/db.php';
             </form>
         </div>
     </div>
+
+    <!-- MODAL EDITAR TAREFA -->
+    <div class="modal fade" id="modalEditarTarefa" tabindex="-1">
+        <div class="modal-dialog">
+            <form action="atualizar_tarefa.php" method="POST" class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">✏ Editar Tarefa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" name="id" id="edit-id">
+
+                <div class="mb-3">
+                <label class="form-label">Título:</label>
+                <input type="text" name="titulo" id="edit-titulo" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                <label class="form-label">Descrição:</label>
+                <textarea name="descricao" id="edit-descricao" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                <label class="form-label">Status:</label>
+                <select name="status" id="edit-status" class="form-select">
+                    <option value="pendente">Pendente</option>
+                    <option value="concluida">Concluída</option>
+                </select>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar alterações</button>
+            </div>
+
+            </form>
+        </div>
+    </div>
+
 
 
 

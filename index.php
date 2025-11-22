@@ -7,6 +7,23 @@ if(!isset($_SESSION['usuario'])) {
 
 require 'config/db.php';
 
+// Buscar tarefas pendentes
+$stmtPendentes = $pdo->prepare("
+    SELECT * FROM tasks 
+    WHERE status = 'pendente' 
+    ORDER BY data_criacao DESC
+");
+$stmtPendentes->execute();
+$tarefasPendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
+
+// Buscar tarefas concluídas
+$stmtConcluidas = $pdo->prepare("
+    SELECT * FROM tasks 
+    WHERE status = 'concluida' 
+    ORDER BY data_criacao DESC
+");
+$stmtConcluidas->execute();
+$tarefasConcluidas = $stmtConcluidas->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>

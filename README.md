@@ -44,7 +44,7 @@ Uma aplicação simples e funcional de **Lista de Tarefas**, desenvolvida com fo
 ---
 
 ### 📝 Tarefas Pendentes
-![Tarefas Pendentes](./Captura%20de%20tela%202025-11-22%20210223.png)
+![Tarefas Pendentes](https://github.com/jeffson-bruno/lista-tarefas/issues/3#issue-3655277038)
 
 ---
 

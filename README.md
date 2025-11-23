@@ -33,7 +33,7 @@ Uma aplicação simples e funcional de **Lista de Tarefas**, desenvolvida com fo
 ## 🎯 Estrutura Visual
 
 ### 🔐 Tela de Login
-![Tela de Login](./Captura%20de%20tela%202025-11-22%20210012.png)
+https://github.com/jeffson-bruno/lista-tarefas/issues/1#issue-3655268667
 
 ---
 

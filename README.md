@@ -30,7 +30,7 @@ Uma aplicação simples e funcional de **Lista de Tarefas**, desenvolvida com fo
 
 ---
 
-## 🎯 Estrutura Visual
+## 🎯 Estrutura Visual do Projeto
 
 ### 🔐 Tela de Login
 ![Tela de login](https://github.com/jeffson-bruno/lista-tarefas/issues/1#issue-3655268667)
@@ -54,7 +54,7 @@ Uma aplicação simples e funcional de **Lista de Tarefas**, desenvolvida com fo
 ---
 
 ### 🟢 Tarefas Concluídas
-![Tarefas Concluídas](./Captura%20de%20tela%202025-11-22%20210313.png)
+![Tarefas Concluídas](https://github.com/jeffson-bruno/lista-tarefas/issues/5#issue-3655278752)
 
 ---
 

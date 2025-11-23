@@ -39,7 +39,7 @@ Uma aplicação simples e funcional de **Lista de Tarefas**, desenvolvida com fo
 ---
 
 ### 📄 Dashboard Inicial
-![Dashboard](./Captura%20de%20tela%202025-11-22%20210046.png)
+![Dashboard](https://github.com/jeffson-bruno/lista-tarefas/issues/2#issue-3655275799)
 
 ---
 

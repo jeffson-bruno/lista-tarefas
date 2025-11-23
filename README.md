@@ -49,7 +49,7 @@ Uma aplicação simples e funcional de **Lista de Tarefas**, desenvolvida com fo
 ---
 
 ### ✏ Modal de Edição
-![Modal de Edição](./Captura%20de%20tela%202025-11-22%20210248.png)
+![Modal de Edição](https://github.com/jeffson-bruno/lista-tarefas/issues/4#issue-3655277928)
 
 ---
 
